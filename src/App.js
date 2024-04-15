@@ -27,6 +27,16 @@ class App {
     return versionNum;
   }
 
+  generateAnswer(version) {
+    if (version === 1) { // 숫자 버전
+      return Math.floor(Math.random() * 100) + 1;
+    } else if (version === 2) { // 영어 버전 
+      // A~Z (65~90), a~z (97~122)
+      let startCharCode = Math.random() < 0.5 ? 65 : 97; 
+      return String.fromCharCode(startCharCode + Math.floor(Math.random() * 26));
+    }
+  }
+
 
   async upDownGame(version) {
     let userInput;
@@ -35,8 +45,8 @@ class App {
     let max = 100;
     let minEng = 'A';
     let maxEng = 'z';
-    if (version == 1) { //숫자 버전
-      const correctNum = Math.floor(Math.random() * 100) + 1;
+    if (version === 1) { //숫자 버전
+      const correctNum = this.generateAnswer(version);
       do {
           try {
               MyUtils.Console.print(`숫자를 입력해주세요(${min} ~ ${max}) : `);
@@ -65,7 +75,7 @@ class App {
           }
       } while (true);
   } else { //영어 버전
-    const correctEng = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+    const correctEng = this.generateAnswer(version);
     const eng = /^[a-zA-Z]+$/;
     do {
         try {
@@ -98,10 +108,7 @@ class App {
   }
 }
 
-
     
 }
-
-
 
 module.exports = App;
