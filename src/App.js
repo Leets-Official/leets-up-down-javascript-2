@@ -14,6 +14,7 @@ class App {
       default:
         throw Error("[ERROR] 존재하지 않는 버전입니다.");
     }
+    return MyUtils.count
   }
     
   async caseNumber() {
@@ -23,6 +24,10 @@ class App {
     while (true) {
       MyUtils.Console.print("숫자를 입력해주세요(" + min + " ~ " + max + ") : ");
       MyUtils.setUserInput(await MyUtils.Console.readLineAsync());
+      if (MyUtils.userInput < min || MyUtils.userInput > max) {
+        MyUtils.Console.print("[ERROR] 범위 내의 숫자를 입력하세요.");
+        continue;
+      }
       MyUtils.count++;
       if (parseInt(MyUtils.userInput) == randomNum) {
         MyUtils.Console.print("정답!");
@@ -46,6 +51,14 @@ class App {
     while (true) {
       MyUtils.Console.print("영어를 입력해주세요(" + min + " ~ " + max + ") : ");
       MyUtils.setUserInput(await MyUtils.Console.readLineAsync());
+      // if (!MyUtils.userInput.includes(alpha)) {
+      //   MyUtils.Console.print("[ERROR] 입력 문자의 타입이 맞지 않습니다.");
+      //   continue;
+      // }
+      if (MyUtils.userInput < min || MyUtils.userInput > max) {
+        MyUtils.Console.print("[ERROR] 범위 내의 알파벳을 입력하세요.");
+        continue;
+      }
       MyUtils.count++;
       if (MyUtils.userInput == randomAlpha) {
         MyUtils.Console.print("정답!");
