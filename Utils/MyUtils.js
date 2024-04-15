@@ -2,6 +2,7 @@ const readline = require("readline");
 
 const MyUtils = {
   userInput: "",
+  count: 0,
 
   setUserInput: (input) => {
     MyUtils.userInput = input;
