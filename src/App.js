@@ -13,18 +13,18 @@ class App {
 
     while (!isVersionexist){
       MyUtils.Console.print(`업다운 게임을 시작합니다.\n`);
-      MyUtils.Console.print(`버전을 입력해주세요 (숫자 버전: 1, 영어 버전: 2): `);
+      MyUtils.Console.print(`버전을 입력해주세요 (숫자 버전: 1, 영어 버전: 2) : `);
       version = await MyUtils.Console.readLineAsync();
       
       try {
         if(version == 1){
-          answer = await this.getRandomNum();
+          answer = await this.generateAnswer();
           this.version1();
           isVersionexist = true;
         }
 
         else if(version == 2){
-          answer = await this.getRandomEng();
+          answer = await this.generateAnswer();
           this.version2();
           isVersionexist = true;
         }
@@ -38,16 +38,16 @@ class App {
     }
   }
 
+  async generateAnswer(){
+    if(version == 1){
+      let randomNum = Math.floor(Math.random()*101);
+      return randomNum;
+    }
 
-  //-------------난수 생성
-  async getRandomNum(){
-    let randomNum = Math.floor(Math.random()*101);
-    return randomNum;
-  }
-
-  async getRandomEng(){
-    let randomEng = Math.random().toString(36).substring(2, 3);
-    return randomEng;
+    if(version == 2){
+      let randomEng = Math.random().toString(36).substring(2, 3);
+      return randomEng;
+    }
   }
 
 
@@ -81,12 +81,12 @@ class App {
             }
             else{
               if(input < answer){
-                MyUtils.Console.print(`UP`);
-                minRange = input;
+                MyUtils.Console.print("UP");
+                minRange = input + 1;
               }
               else{
-                MyUtils.Console.print(`DOWN`);
-                maxRange = input;
+                MyUtils.Console.print("DOWN");
+                maxRange = input - 1;
               }
             }
           }
