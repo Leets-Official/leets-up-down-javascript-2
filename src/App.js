@@ -23,7 +23,7 @@ class App {
       if (version == '1') {
         return Math.floor(Math.random() * 100) + 1;
       } else {
-        return MyUtils.alpha[Math.floor(Math.random() * 52) + 1].toString();
+        return MyUtils.alpha[Math.floor(Math.random() * 52)];
       }
   }
     
