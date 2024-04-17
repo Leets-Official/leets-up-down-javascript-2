@@ -27,9 +27,7 @@ class App {
     if (version === "1") {
       return Math.floor(Math.random() * 100) + 1;
     } else {
-      const upperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      const lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
-      const letters = upperCaseLetters + lowerCaseLetters;
+      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
       const randomIndex = Math.floor(Math.random() * letters.length);
       return letters[randomIndex];
     }
