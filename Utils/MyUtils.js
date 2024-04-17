@@ -24,7 +24,6 @@ const MyUtils = {
           input: process.stdin,
           output: process.stdout,
         });
-
         rl.question("", (input) => {
           rl.close();
           resolve(input);
