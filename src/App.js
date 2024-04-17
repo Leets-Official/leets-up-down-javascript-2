@@ -1,5 +1,5 @@
 const MyUtils = require("../Utils/MyUtils");
-let version=0;
+let version;
 class App {
   async play() {
     
@@ -10,13 +10,11 @@ class App {
   }
 
   async userInput(){
-    let versionNum=0;
     try{
      
       MyUtils.Console.print("버전을 입력해주세요 (숫자 버전: 1, 영어 버전: 2) : ");
       version = await MyUtils.Console.readLineAsync();
-      versionNum = parseInt(version);
-      if(versionNum !== 1 && versionNum !== 2) {
+      if(version !== "1" && version !== "2") {
         throw new Error("존재하지 않는 버전입니다.");
     }
       MyUtils.Console.print("");
@@ -24,16 +22,18 @@ class App {
     }catch(error){
       throw new Error(`[ERROR] ${error.message}`);
     }
-    return versionNum;
+    return version;
   }
 
   generateAnswer(version) {
-    if (version === 1) { // 숫자 버전
+    if (version === "1") { // 숫자 버전
       return Math.floor(Math.random() * 100) + 1;
-    } else if (version === 2) { // 영어 버전 
+    } 
+    else  { // 영어 버전 
       // A~Z (65~90), a~z (97~122)
-      let startCharCode = Math.random() < 0.5 ? 65 : 97; 
-      return String.fromCharCode(startCharCode + Math.floor(Math.random() * 26));
+      //소문자 대문자 시작 랜덤하게 결정
+      let engStart = Math.random() < 0.5 ? 65 : 97; 
+      return String.fromCharCode(engStart + Math.floor(Math.random() * 26));
     }
   }
 
@@ -45,7 +45,7 @@ class App {
     let max = 100;
     let minEng = 'A';
     let maxEng = 'z';
-    if (version === 1) { //숫자 버전
+    if (version === "1") { //숫자 버전
       const correctNum = this.generateAnswer(version);
       do {
           try {
