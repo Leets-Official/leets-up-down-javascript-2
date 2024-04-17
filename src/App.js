@@ -9,6 +9,7 @@ class App {
     try {
       const version = await this.chooseVersion();
       const answer = this.generateAnswer(version);
+      await this.startGame(version, answer);
     } catch (error) {
       throw new Error(`[ERROR] ${error.message}`);
     }
@@ -31,6 +32,52 @@ class App {
       const letters = upperCaseLetters + lowerCaseLetters;
       const randomIndex = Math.floor(Math.random() * letters.length);
       return letters[randomIndex];
+    }
+  }
+
+  async startGame(version, answer) {
+    let guessCount = 0;
+    let range;
+    if (version === "1") {
+      range = "1 ~ 100";
+    } else {
+      range = "A ~ z";
+    }
+
+    while (true) {
+      let guess;
+      try {
+        if (version === "1") {
+          MyUtils.Console.print(`숫자를 입력해주세요(${range}) : `);
+          guessCount++;
+          guess = await MyUtils.Console.readLineAsync();
+          if (!guess.match(/^[0-9]+$/)) {
+            throw new Error("입력 문자의 타입이 맞지 않습니다.");
+          }
+          if (
+            isNaN(guess) ||
+            guess < parseInt(range.split(" ~ ")[0]) ||
+            guess > parseInt(range.split(" ~ ")[1])
+          ) {
+            throw new Error("범위 내의 숫자를 입력하세요.");
+          }
+        } else {
+          MyUtils.Console.print(`영어를 입력해주세요(${range}) : `);
+          guessCount++;
+          guess = await MyUtils.Console.readLineAsync();
+          if (!guess.match(/^[A-Za-z]+$/) || guess.length > 1) {
+            throw new Error("입력 문자의 타입이 맞지 않습니다.");
+          }
+          if (
+            guess.charCodeAt(0) < range.charCodeAt(0) ||
+            guess.charCodeAt(0) > range.charCodeAt(4)
+          ) {
+            throw new Error("범위 내의 알파벳을 입력하세요.");
+          }
+        }
+      } catch (error) {
+        MyUtils.Console.print(`[ERROR] ${error.message}`);
+      }
     }
   }
 }
