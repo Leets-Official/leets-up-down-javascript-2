@@ -21,6 +21,18 @@ class App {
     }
     return version;
   }
+
+  generateAnswer(version) {
+    if (version === "1") {
+      return Math.floor(Math.random() * 100) + 1;
+    } else {
+      const upperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
+      const letters = upperCaseLetters + lowerCaseLetters;
+      const randomIndex = Math.floor(Math.random() * letters.length);
+      return letters[randomIndex];
+    }
+  }
 }
 
 module.exports = App;
