@@ -77,25 +77,23 @@ class App {
         if (guess === answer.toString() || guess === answer) {
           MyUtils.Console.print("정답!\n");
           break;
-        } else if (version === "1") {
+        } else {
           if (guess < answer) {
             MyUtils.Console.print("UP");
-            range = `${parseInt(guess) + 1} ~ ${range.split(" ~ ")[1]}`;
+            range =
+              version === "1"
+                ? `${parseInt(guess) + 1} ~ ${range.split(" ~ ")[1]}`
+                : `${String.fromCharCode(guess.charCodeAt(0) + 1)} ~ ${
+                    range.split(" ~ ")[1]
+                  }`;
           } else {
             MyUtils.Console.print("DOWN");
-            range = `${range.split(" ~ ")[0]} ~ ${parseInt(guess) - 1}`;
-          }
-        } else {
-          if (guess.charCodeAt(0) < answer.charCodeAt(0)) {
-            MyUtils.Console.print("UP");
-            range = `${String.fromCharCode(guess.charCodeAt(0) + 1)} ~ ${
-              range.split(" ~ ")[1]
-            }`;
-          } else {
-            MyUtils.Console.print("DOWN");
-            range = `${range.split(" ~ ")[0]} ~ ${String.fromCharCode(
-              guess.charCodeAt(0) - 1
-            )}`;
+            range =
+              version === "1"
+                ? `${range.split(" ~ ")[0]} ~ ${parseInt(guess) - 1}`
+                : `${range.split(" ~ ")[0]} ~ ${String.fromCharCode(
+                    guess.charCodeAt(0) - 1
+                  )}`;
           }
         }
       } catch (error) {
