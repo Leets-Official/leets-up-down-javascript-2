@@ -1,31 +1,37 @@
 const MyUtils = require("../Utils/MyUtils");
 
-let version;
 let answer;
 let input;
-let count=0;
-let errorMessage;
+let count;
 
 class App {
-  async play() {
 
+  constructor() {
+    this.version;
+  }
+  async play() {
     let isVersionexist = false;
 
     while (!isVersionexist){
       MyUtils.Console.print(`업다운 게임을 시작합니다.\n`);
       MyUtils.Console.print(`버전을 입력해주세요 (숫자 버전: 1, 영어 버전: 2) : `);
-      version = await MyUtils.Console.readLineAsync();
-      
+      this.version = await MyUtils.Console.readLineAsync();
+
       try {
-        if(version == 1){
-          answer = await this.generateAnswer();
-          this.version1();
+        
+        if(isNaN(this.version)) {
+          throw `입력 문자의 타입이 맞지 않습니다.`;
+        }
+
+        if(this.version == 1){
+          answer = this.generateAnswer(this.version);
+          await this.version1();
           isVersionexist = true;
         }
 
-        else if(version == 2){
-          answer = await this.generateAnswer();
-          this.version2();
+        else if(this.version == 2){
+          answer = this.generateAnswer(this.version);
+          await this.version2();
           isVersionexist = true;
         }
 
@@ -38,32 +44,34 @@ class App {
     }
   }
 
-  async generateAnswer(){
-    if(version == 1){
-      let randomNum = Math.floor(Math.random()*101);
+  //-------------난수 생성
+  generateAnswer(version) {
+    if (version == 1) {
+      let randomNum = Math.floor(Math.random() * 100) + 1;
       return randomNum;
     }
-
-    if(version == 2){
-      let randomEng = Math.random().toString(36).substring(2, 3);
+  
+    if (version == 2) {
+      let randomEng = Math.floor(Math.random() * 26) + (Math.random() > 0.5 ? 65 : 97);
+      randomEng = String.fromCharCode(randomEng);
       return randomEng;
     }
   }
-
-
+  
   //-------------version1(숫자)
   async version1(){
 
     let isAnswer = false;
     let minRange = 1;
     let maxRange = 100;
+    count = 0;
 
     while (!isAnswer){
       try{
 
         MyUtils.Console.print(`숫자를 입력해주세요(${minRange} ~ ${maxRange}) : `);
         input = await MyUtils.Console.readLineAsync();
-        
+
         count++;
 
         if(isNaN(input)) {
@@ -82,11 +90,11 @@ class App {
             else{
               if(input < answer){
                 MyUtils.Console.print("UP");
-                minRange = input + 1;
+                minRange = parseInt(input) + 1;
               }
               else{
                 MyUtils.Console.print("DOWN");
-                maxRange = input - 1;
+                maxRange = parseInt(input) - 1;
               }
             }
           }
@@ -101,9 +109,11 @@ class App {
 
   //-------------version2(영어)
   async version2(){
+
     let isAnswer = false;
     let minRange = 'A';
     let maxRange = 'z';
+    count = 0;
 
     while (!isAnswer){
         try{
@@ -126,11 +136,11 @@ class App {
               else{
                 if (input < answer){
                     MyUtils.Console.print(`UP`);
-                    minRange = input;
+                    minRange = String.fromCharCode(input.charCodeAt(0) + 1);
                 }
                 else{
                     MyUtils.Console.print(`DOWN`);
-                    maxRange = input;
+                    maxRange = String.fromCharCode(input.charCodeAt(0) - 1);
                 }
               }
             }} catch(error){
