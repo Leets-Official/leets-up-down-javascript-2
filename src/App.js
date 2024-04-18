@@ -10,39 +10,30 @@ class App {
     this.version;
   }
   async play() {
-    let isVersionexist = false;
-
-    while (!isVersionexist){
-      MyUtils.Console.print(`업다운 게임을 시작합니다.\n`);
-      MyUtils.Console.print(`버전을 입력해주세요 (숫자 버전: 1, 영어 버전: 2) : `);
-      this.version = await MyUtils.Console.readLineAsync();
-
-      try {
-        
-        if(isNaN(this.version)) {
-          throw `입력 문자의 타입이 맞지 않습니다.`;
-        }
-
-        if(this.version == 1){
-          answer = this.generateAnswer(this.version);
-          await this.version1();
-          isVersionexist = true;
-        }
-
-        else if(this.version == 2){
-          answer = this.generateAnswer(this.version);
-          await this.version2();
-          isVersionexist = true;
-        }
-
-        else {
-          throw `존재하지 않는 버전입니다.`;
-        }
-      } catch(error){
-        MyUtils.Console.print(`[ERROR] ${error}`);
-      }
-    }
-  }
+ 
+     MyUtils.Console.print(`업다운 게임을 시작합니다.\n`);
+     MyUtils.Console.print(`버전을 입력해주세요 (숫자 버전: 1, 영어 버전: 2) : `);
+     this.version = await MyUtils.Console.readLineAsync();
+     try {
+      
+       if(isNaN(this.version)) {
+         MyUtils.Console.print(`입력 문자의 타입이 맞지 않습니다.`);
+       }
+       if(this.version == 1){
+         answer = this.generateAnswer(this.version);
+         await this.version1();
+       }
+       else if(this.version == 2){
+         answer = this.generateAnswer(this.version);
+         await this.version2();
+       }
+       else {
+         throw `존재하지 않는 버전입니다.`;
+       }
+     } catch(error){
+       throw new Error(`[ERROR] ${error}`);
+     }
+   }
 
   //-------------난수 생성
   generateAnswer(version) {
